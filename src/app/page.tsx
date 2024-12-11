@@ -4,6 +4,8 @@ import Navbar from "@/app/components/Navbar";
 import Image from "next/image";
 import { useQuery } from "react-query";
 import axios from "axios";
+import { format, parseISO } from "date-fns";
+
 
 //https://api.openweathermap.org/data/2.5/forecast?q=montreal&appid=f8308b9212f84de2c4c2f1b35117be2b&cnt=2
 
@@ -68,7 +70,7 @@ type WeatherData = {
 export default function Home() {
 
   const { isLoading, error, data } = useQuery<WeatherData>("repoData", async () => {
-    const { data } = await axios.get('https://api.openweathermap.org/data/2.5/forecast?q=montreal&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}&cnt=56');
+    const { data } = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=montreal&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}&cnt=56`);
     return data;
 
   }
@@ -94,7 +96,8 @@ export default function Home() {
           <div>
 
             <h2 className="flex gap-1 text-2xl items-end">
-              <p></p>
+              <p> {format(parseISO(firstData?.dt_txt ?? ''), 'EEEE')} </p>
+              <p> ({format(parseISO(firstData?.dt_txt ?? ''), 'dd.MM.yyyy')})</p>
             </h2>
             <div></div>
           </div>
