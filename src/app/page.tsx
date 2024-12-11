@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { format, parseISO } from "date-fns";
+import Container from "./components/Container";
 
 
 //https://api.openweathermap.org/data/2.5/forecast?q=montreal&appid=f8308b9212f84de2c4c2f1b35117be2b&cnt=2
@@ -99,7 +100,12 @@ export default function Home() {
               <p> {format(parseISO(firstData?.dt_txt ?? ''), 'EEEE')} </p>
               <p className="text-lg"> ({format(parseISO(firstData?.dt_txt ?? ''), 'dd.MM.yyyy')})</p>
             </h2>
-            <Container></Container>
+            <Container className="gap-10 px-6 items-center">
+
+
+              <div className=" flex flex-col px-4"></div>
+
+            </Container>
 
 
           </div>
