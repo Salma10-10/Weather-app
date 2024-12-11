@@ -72,18 +72,38 @@ export default function Home() {
     return data;
 
   }
-    //fetch("https://api.openweathermap.org/data/2.5/forecast?q=montreal&appid=f8308b9212f84de2c4c2f1b35117be2b&cnt=56").then((res) =>
-    //res.json(),
-    //)
   );
-  console.log("data", data?.city.name);
 
-  if (isLoading) return 'Loading...'
+  const firstData = data?.list[0];
+
+  console.log("data", data);
+
+  if (isLoading) return (<div className="flex items-center min-h-screen justify-center">
+    <p className="animate-bounce">Loading...</p>
+
+  </div>);
 
 
   return (
     <div className="flex flex-col gap-4 bg-gray-100 min-h-screen ">
       <Navbar />
+      <main className="px-3 max-w-7xl mx-auto flex flex-col gap-9 w-full pb-10 pt-4">
+        {/* today data */}
+        <section>
+
+          <div>
+
+            <h2 className="flex gap-1 text-2xl items-end">
+              <p></p>
+            </h2>
+            <div></div>
+          </div>
+        </section>
+
+
+        {/* 7 days forcast data */}
+        <section></section>
+      </main>
     </div>
   );
 }
