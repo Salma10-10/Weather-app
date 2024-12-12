@@ -93,37 +93,56 @@ export default function Home() {
       <Navbar />
       <main className="px-3 max-w-7xl mx-auto flex flex-col gap-9 w-full pb-10 pt-4">
         {/* today data */}
-        <section>
-
-          <div>
-
-            <h2 className="flex gap-1 text-2xl items-end">
-              <p> {format(parseISO(firstData?.dt_txt ?? ''), 'EEEE')} </p>
-              <p className="text-lg"> ({format(parseISO(firstData?.dt_txt ?? ''), 'dd.MM.yyyy')})
+        <section className="space-y-4 ">
+          <div className="space-y-2">
+            <h2 className="flex gap-1 text-2xl  items-end ">
+              <p>{format(parseISO(firstData?.dt_txt ?? ""), "EEEE")}</p>
+              <p className="text-lg">
+                ({format(parseISO(firstData?.dt_txt ?? ""), "dd.MM.yyyy")})
               </p>
             </h2>
-            <Container className="gap-10 px-6 items-center">
-              <div className=" flex flex-col px-4">
+            <Container className=" gap-10 px-6 items-center">
+              {/* temprature */}
+              <div className=" flex flex-col px-4 ">
                 <span className="text-5xl">
-                  {convertKelvinToCelsius(firstData?.main.temp ?? 274.3)}°
+                  {convertKelvinToCelsius(firstData?.main.temp ?? 296.37)}°
                 </span>
                 <p className="text-xs space-x-1 whitespace-nowrap">
                   <span> Feels like</span>
                   <span>
-                    {convertKelvinToCelsius(firstData?.main.temp ?? 0)}°
+                    {convertKelvinToCelsius(
+                      firstData?.main.feels_like ?? 0
+                    )}
+                    °
                   </span>
                 </p>
                 <p className="text-xs space-x-2">
                   <span>
-                    {convertKelvinToCelsius(firstData?.main.temp ?? 0)}°
+                    {convertKelvinToCelsius(firstData?.main.temp_min ?? 0)}
+                    °↓{" "}
+                  </span>
+                  <span>
+                    {" "}
+                    {convertKelvinToCelsius(firstData?.main.temp_max ?? 0)}
+                    °↑
                   </span>
 
                 </p>
               </div>
+              {/** time and weather icon */}
+              <div className="flex gap-10 sm:gap-16 overflow-x-auto w-full justify-between pr-3">
+                {data?.list.map((d, i) => (
+                  <div key={i}
+                    className="flex flex-col justify-between gap-2 items-center text-xs font-semibold "
+                  >
+                    <p>
 
+                      {format(parseISO(d.dt_txt), "h:mm a")}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </Container>
-
-
           </div>
         </section>
 
