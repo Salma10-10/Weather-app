@@ -13,6 +13,8 @@ import WeatherDetails from "@/app/components/WeatherDetails";
 import { metersToKilometers } from "@/app/utils/metersToKilometers";
 import { convertWindSpeed } from "@/app/utils/convertWindSpeed";
 import ForecastWeatherDetail from "@/app/components/ForecastWeatherDetail"
+import { loadingCityAtom, placeAtom } from "./atom";
+import { useAtom } from "jotai";
 
 
 //https://api.openweathermap.org/data/2.5/forecast?q=montreal&appid=f8308b9212f84de2c4c2f1b35117be2b&cnt=2
@@ -76,9 +78,10 @@ type WeatherData = {
 //to fetch our data we are going to use query
 
 export default function Home() {
+  const [place, setPlace] = useAtom(placeAtom)
 
   const { isLoading, error, data } = useQuery<WeatherData>("repoData", async () => {
-    const { data } = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=montreal&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}&cnt=56`);
+    const { data } = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${place}&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}&cnt=56`);
     return data;
 
   }
