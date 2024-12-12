@@ -10,7 +10,7 @@ import { convertKelvinToCelsius } from "./utils/convertKelvinToCelsius";
 import WeatherIcon from "@/app/components/WeatherIcon";
 import { getDayOrNightIcon } from "@/app/utils/getDayOrNightIcon";
 import WeatherDetails from "@/app/components/WeatherDetails";
-
+import { metersToKilometers } from "@/app/utils/metersToKilometers";
 
 //https://api.openweathermap.org/data/2.5/forecast?q=montreal&appid=f8308b9212f84de2c4c2f1b35117be2b&cnt=2
 
@@ -160,7 +160,14 @@ export default function Home() {
               )} />
             </Container>
             <Container className="bg-pink-300/80  px-6 gap-4 justify-between overflow-x-auto">
-              <WeatherDetails />
+              <WeatherDetails
+                visability={metersToKilometers(firstData?.visibility ?? 10000)}
+                airPressure={`${firstData?.main.pressure} hPa`}
+                humidity={`${firstData?.main.humidity}%`}
+                sunrise={format(data?.city.sunrise ?? 1702949452, "H:mm")}
+                sunset={format(data?.city.sunset ?? 1702517657, "H:mm")}
+                windSpeed={convertWindSpeed(firstData?.wind.speed ?? 1.64)
+                  />
             </Container>
             {/* right*/}
           </div>
