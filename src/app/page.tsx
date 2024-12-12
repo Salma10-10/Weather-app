@@ -158,6 +158,7 @@ export default function Home() {
               <WeatherIcon iconName={getDayOrNightIcon(firstData?.weather[0].icon ?? "", firstData?.dt_txt ?? ""
               )} />
             </Container>
+            <Container></Container>
             {/* right*/}
           </div>
 
