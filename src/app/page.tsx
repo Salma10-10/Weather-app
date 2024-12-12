@@ -9,6 +9,7 @@ import Container from "./components/Container";
 import { convertKelvinToCelsius } from "./utils/convertKelvinToCelsius";
 import WeatherIcon from "@/app/components/WeatherIcon";
 import { getDayOrNightIcon } from "@/app/utils/getDayOrNightIcon";
+import WeatherDetails from "@/app/components/WeatherDetails";
 
 
 //https://api.openweathermap.org/data/2.5/forecast?q=montreal&appid=f8308b9212f84de2c4c2f1b35117be2b&cnt=2
@@ -159,7 +160,7 @@ export default function Home() {
               )} />
             </Container>
             <Container className="bg-pink-300/80  px-6 gap-4 justify-between overflow-x-auto">
-
+              <WeatherDetails />
             </Container>
             {/* right*/}
           </div>
