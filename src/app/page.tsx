@@ -135,21 +135,21 @@ export default function Home() {
                   <div key={i}
                     className="flex flex-col justify-between gap-2 items-center text-xs font-semibold "
                   >
-                    <p>
-
+                    <p className="whitespace-nowrap">
                       {format(parseISO(d.dt_txt), "h:mm a")}
                     </p>
+                    <p>{convertKelvinToCelsius(d?.main.temp ?? 0)}°</p>
                   </div>
                 ))}
               </div>
             </Container>
           </div>
-        </section>
+        </section >
 
 
         {/* 7 days forcast data */}
-        <section></section>
-      </main>
-    </div>
+        <section></section >
+      </main >
+    </div >
   );
 }
