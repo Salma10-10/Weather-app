@@ -8,6 +8,7 @@ import { format, parseISO } from "date-fns";
 import Container from "./components/Container";
 import { convertKelvinToCelsius } from "./utils/convertKelvinToCelsius";
 import WeatherIcon from "@/app/components/WeatherIcon";
+import { getDayOrNightIcon } from "@/app/utils/getDayOrNightIcon";
 
 
 //https://api.openweathermap.org/data/2.5/forecast?q=montreal&appid=f8308b9212f84de2c4c2f1b35117be2b&cnt=2
@@ -139,7 +140,8 @@ export default function Home() {
                     <p className="whitespace-nowrap">
                       {format(parseISO(d.dt_txt), "h:mm a")}
                     </p>
-                    <WeatherIcon iconName={d.weather[0].icon} />
+                    {/*<WeatherIcon iconName={d.weather[0].icon} />*/}
+                    <WeatherIcon iconName={getDayOrNightIcon(d.weather[0].icon, d.dt_txt)} />
                     <p>{convertKelvinToCelsius(d?.main.temp ?? 0)}°</p>
                   </div>
                 ))}
