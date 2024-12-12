@@ -158,7 +158,9 @@ export default function Home() {
               <WeatherIcon iconName={getDayOrNightIcon(firstData?.weather[0].icon ?? "", firstData?.dt_txt ?? ""
               )} />
             </Container>
-            <Container></Container>
+            <Container className="bg-pink-300/80  px-6 gap-4 justify-between overflow-x-auto">
+
+            </Container>
             {/* right*/}
           </div>
 
