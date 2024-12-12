@@ -1,5 +1,6 @@
 /** @format */
 "use client";
+
 import React from "react";
 import { MdOutlineLocationOn, MdWbSunny } from "react-icons/md";
 import { MdMyLocation } from "react-icons/md";
@@ -16,6 +17,7 @@ const API_KEY = process.env.NEXT_PUBLIC_WEATHER_KEY;
 export default function Navbar({ location }: Props) {
     const [city, setCity] = useState("");
     const [error, setError] = useState("");
+    //
     const [suggestions, setSuggestions] = useState<string[]>([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [place, setPlace] = useAtom(placeAtom);

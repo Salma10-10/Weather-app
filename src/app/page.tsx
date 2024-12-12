@@ -15,7 +15,7 @@ import { convertWindSpeed } from "@/app/utils/convertWindSpeed";
 import ForecastWeatherDetail from "@/app/components/ForecastWeatherDetail"
 import { loadingCityAtom, placeAtom } from "./atom";
 import { useAtom } from "jotai";
-
+import { useEffect } from "react";
 
 //https://api.openweathermap.org/data/2.5/forecast?q=montreal&appid=f8308b9212f84de2c4c2f1b35117be2b&cnt=2
 
@@ -80,12 +80,16 @@ type WeatherData = {
 export default function Home() {
   const [place, setPlace] = useAtom(placeAtom)
 
-  const { isLoading, error, data } = useQuery<WeatherData>("repoData", async () => {
+  const { isLoading, error, data, refetch } = useQuery<WeatherData>("repoData", async () => {
     const { data } = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${place}&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}&cnt=56`);
     return data;
 
   }
   );
+
+  useEffect(() => {
+    refetch();
+  }, [place, refetch])
 
   const firstData = data?.list[0];
 

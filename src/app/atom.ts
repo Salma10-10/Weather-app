@@ -1,7 +1,7 @@
 /** @format */
-
+'use client'
 import { atom } from "jotai";
 
-export const placeAtom = atom("Republic of Canada");
-
+// Default city is "Toronto"
+export const placeAtom = atom("Toronto");
 export const loadingCityAtom = atom(false);
