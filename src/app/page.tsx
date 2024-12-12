@@ -6,6 +6,7 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import { format, parseISO } from "date-fns";
 import Container from "./components/Container";
+import { convertKelvinToCelsius } from "./utils/convertKelvinToCelsius";
 
 
 //https://api.openweathermap.org/data/2.5/forecast?q=montreal&appid=f8308b9212f84de2c4c2f1b35117be2b&cnt=2
@@ -98,12 +99,27 @@ export default function Home() {
 
             <h2 className="flex gap-1 text-2xl items-end">
               <p> {format(parseISO(firstData?.dt_txt ?? ''), 'EEEE')} </p>
-              <p className="text-lg"> ({format(parseISO(firstData?.dt_txt ?? ''), 'dd.MM.yyyy')})</p>
+              <p className="text-lg"> ({format(parseISO(firstData?.dt_txt ?? ''), 'dd.MM.yyyy')})
+              </p>
             </h2>
             <Container className="gap-10 px-6 items-center">
+              <div className=" flex flex-col px-4">
+                <span className="text-5xl">
+                  {convertKelvinToCelsius(firstData?.main.temp ?? 274.3)}°
+                </span>
+                <p className="text-xs space-x-1 whitespace-nowrap">
+                  <span> Feels like</span>
+                  <span>
+                    {convertKelvinToCelsius(firstData?.main.temp ?? 0)}°
+                  </span>
+                </p>
+                <p className="text-xs space-x-2">
+                  <span>
+                    {convertKelvinToCelsius(firstData?.main.temp ?? 0)}°
+                  </span>
 
-
-              <div className=" flex flex-col px-4"></div>
+                </p>
+              </div>
 
             </Container>
 

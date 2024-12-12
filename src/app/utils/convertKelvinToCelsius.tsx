@@ -2,5 +2,5 @@
 
 export function convertKelvinToCelsius(tempInKelvin: number): number {
     const tempInCelsius = tempInKelvin - 273.15;
-    return Math.floor(tempInCelsius);
+    return Math.floor(tempInCelsius); //remove decimal parts and keeps integer part
 }
