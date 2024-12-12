@@ -3,8 +3,8 @@
 import React from "react";
 import Container from "./Container";
 import WeatherIcon from "./WeatherIcon";
-import WeatherDetails, { WeatherDetailProps } from "./WeatherDetails";
-import { convertKelvinToCelsius } from "@/utils/convertKelvinToCelsius";
+import WeatherDetails, { WeatherDetailProps } from ".//WeatherDetails";
+import { convertKelvinToCelsius } from "@/app/utils/convertKelvinToCelsius";
 
 export interface ForecastWeatherDetailProps extends WeatherDetailProps {
     weatehrIcon: string;

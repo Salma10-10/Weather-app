@@ -4,13 +4,16 @@ import Navbar from "@/app/components/Navbar";
 import Image from "next/image";
 import { useQuery } from "react-query";
 import axios from "axios";
-import { format, parseISO } from "date-fns";
+import { format, fromUnixTime, parseISO } from "date-fns";
 import Container from "./components/Container";
 import { convertKelvinToCelsius } from "./utils/convertKelvinToCelsius";
 import WeatherIcon from "@/app/components/WeatherIcon";
 import { getDayOrNightIcon } from "@/app/utils/getDayOrNightIcon";
 import WeatherDetails from "@/app/components/WeatherDetails";
 import { metersToKilometers } from "@/app/utils/metersToKilometers";
+import { convertWindSpeed } from "@/app/utils/convertWindSpeed";
+import ForecastWeatherDetail from "@/app/components/ForecastWeatherDetail"
+
 
 //https://api.openweathermap.org/data/2.5/forecast?q=montreal&appid=f8308b9212f84de2c4c2f1b35117be2b&cnt=2
 
@@ -84,6 +87,24 @@ export default function Home() {
   const firstData = data?.list[0];
 
   console.log("data", data);
+  const uniqueDates = [
+    ...new Set(
+      data?.list.map(
+        (entry) => new Date(entry.dt * 1000).toISOString().split("T")[0]
+      )
+    )
+  ];
+
+  // Filtering data to get the first entry after 6 AM for each unique date
+  const firstDataForEachDate = uniqueDates.map((date) => {
+    return data?.list.find((entry) => {
+      const entryDate = new Date(entry.dt * 1000).toISOString().split("T")[0];
+      const entryTime = new Date(entry.dt * 1000).getHours();
+      return entryDate === date && entryTime >= 6;
+    });
+  });
+
+
 
   if (isLoading) return (<div className="flex items-center min-h-screen justify-center">
     <p className="animate-bounce">Loading...</p>
@@ -159,15 +180,18 @@ export default function Home() {
               <WeatherIcon iconName={getDayOrNightIcon(firstData?.weather[0].icon ?? "", firstData?.dt_txt ?? ""
               )} />
             </Container>
-            <Container className="bg-pink-300/80  px-6 gap-4 justify-between overflow-x-auto">
+            <Container className="bg-yellow-300/80  px-6 gap-4 justify-between overflow-x-auto">
               <WeatherDetails
-                visability={metersToKilometers(firstData?.visibility ?? 10000)}
+                visability={metersToKilometers(
+                  firstData?.visibility ?? 10000
+                )}
                 airPressure={`${firstData?.main.pressure} hPa`}
                 humidity={`${firstData?.main.humidity}%`}
                 sunrise={format(data?.city.sunrise ?? 1702949452, "H:mm")}
+                // sunrise={}
                 sunset={format(data?.city.sunset ?? 1702517657, "H:mm")}
-                windSpeed={convertWindSpeed(firstData?.wind.speed ?? 1.64)
-                  />
+                windSpeed={convertWindSpeed(firstData?.wind.speed ?? 1.64)}
+              />
             </Container>
             {/* right*/}
           </div>
@@ -179,6 +203,32 @@ export default function Home() {
         <section className="flex w-full flex-col gap-4 ">
 
           <p className="text-2xl">Forcast (7 days)</p>
+          {firstDataForEachDate.map((d, i) => (
+            <ForecastWeatherDetail
+              key={i}
+              description={d?.weather[0].description ?? ""}
+              weatehrIcon={d?.weather[0].icon ?? "01d"}
+              date={d ? format(parseISO(d.dt_txt), "dd.MM") : ""}
+              day={d ? format(parseISO(d.dt_txt), "dd.MM") : "EEEE"}
+              feels_like={d?.main.feels_like ?? 0}
+              temp={d?.main.temp ?? 0}
+              temp_max={d?.main.temp_max ?? 0}
+              temp_min={d?.main.temp_min ?? 0}
+              airPressure={`${d?.main.pressure} hPa `}
+              humidity={`${d?.main.humidity}% `}
+              sunrise={format(
+                fromUnixTime(data?.city.sunrise ?? 1702517657),
+                "H:mm"
+              )}
+              sunset={format(
+                fromUnixTime(data?.city.sunset ?? 1702517657),
+                "H:mm"
+              )}
+              visability={`${metersToKilometers(d?.visibility ?? 10000)} `}
+              windSpeed={`${convertWindSpeed(d?.wind.speed ?? 1.64)} `}
+            />
+          ))}
+
         </section >
       </main >
     </div >
